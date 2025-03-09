@@ -1,0 +1,67 @@
+package com.aml_sakr.cryptotracker.crypto.presentation.coin_list.components
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.sp
+import com.aml_sakr.cryptotracker.R
+import com.aml_sakr.cryptotracker.crypto.presentation.models.DisplayableNumber
+import com.aml_sakr.cryptotracker.ui.theme.CryptoTrackerTheme
+import com.aml_sakr.cryptotracker.ui.theme.greenBackground
+
+@Composable
+fun PriceChange(
+    modifier: Modifier = Modifier,
+    change: DisplayableNumber
+) {
+    val contentColor =
+        if (change.value < 0.0) MaterialTheme.colorScheme.onErrorContainer else Color.Green
+    val backGroundColor =
+        if (change.value < 0.0) MaterialTheme.colorScheme.errorContainer else greenBackground
+    Row(
+        modifier = modifier
+            .clip(RoundedCornerShape(100f))
+            .background(backGroundColor)
+            .padding(horizontal = dimensionResource(R.dimen._4)),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = if (change.value < 0.0) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
+            contentDescription = null,
+            modifier = Modifier.size(dimensionResource(R.dimen._20)),
+            tint = contentColor
+        )
+        Text(
+            text = "${change.formatted} %",
+            fontSize = 14.sp,
+            color = contentColor,
+            fontWeight = FontWeight.Medium,
+        )
+
+    }
+
+}
+
+@Composable
+@PreviewLightDark
+fun PriceChangePreview() {
+    CryptoTrackerTheme {
+        PriceChange(change = DisplayableNumber(2.43, "2.43 %"))
+    }
+}
