@@ -36,7 +36,7 @@ fun CoinListScreen(modifier: Modifier = Modifier, coinListState: CoinListState) 
             items(coinListState.coinList) { coinUI ->
                 CoinListItem(
                     coinUI = coinUI,
-                    onClick = { /*TODO*/ },
+                    onClick = { },
                     modifier = Modifier.fillParentMaxWidth()
                 )
                 HorizontalDivider()
