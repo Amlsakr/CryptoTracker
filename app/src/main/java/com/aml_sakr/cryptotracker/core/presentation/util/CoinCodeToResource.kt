@@ -1,4 +1,4 @@
-package com.aml_sakr.cryptotracker.util
+package com.aml_sakr.cryptotracker.core.presentation.util
 
 import com.aml_sakr.cryptotracker.R
 

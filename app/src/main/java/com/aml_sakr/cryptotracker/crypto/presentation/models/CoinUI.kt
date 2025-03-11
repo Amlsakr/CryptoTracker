@@ -3,7 +3,7 @@ package com.aml_sakr.cryptotracker.crypto.presentation.models
 import android.icu.text.NumberFormat
 import androidx.annotation.DrawableRes
 import com.aml_sakr.cryptotracker.crypto.domain.Coin
-import com.aml_sakr.cryptotracker.util.getDrawableIdForCoin
+import com.aml_sakr.cryptotracker.core.presentation.util.getDrawableIdForCoin
 import java.util.Locale
 
 data class CoinUI(
