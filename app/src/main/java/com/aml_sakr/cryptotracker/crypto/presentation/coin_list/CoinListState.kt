@@ -6,6 +6,6 @@ import com.aml_sakr.cryptotracker.crypto.presentation.models.CoinUI
 @Immutable
 data class CoinListState(
     val isLoading: Boolean = false,
-    val coinList: ArrayList<CoinUI> = arrayListOf(),
+    val coinList: List<CoinUI> = emptyList(),
     val selectedCoin: CoinUI? = null
 )
