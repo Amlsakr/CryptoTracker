@@ -6,9 +6,11 @@ import com.aml_sakr.cryptotracker.core.domain.util.onError
 import com.aml_sakr.cryptotracker.core.domain.util.onSuccess
 import com.aml_sakr.cryptotracker.crypto.domain.CoinDataSource
 import com.aml_sakr.cryptotracker.crypto.presentation.models.toCoinUI
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -24,6 +26,8 @@ class CoinListViewModel(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = CoinListState()
     )
+    private val _events = Channel<CoinListEvent>()
+    val events = _events.receiveAsFlow()
 
     private fun loadCoins() {
         viewModelScope.launch {
@@ -40,6 +44,7 @@ class CoinListViewModel(
                 }
                 .onError { error ->
                     _state.update { it.copy(isLoading = false) }
+                    _events.send(CoinListEvent.Error(error))
                 }
         }
     }

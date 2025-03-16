@@ -20,7 +20,10 @@ import com.aml_sakr.cryptotracker.crypto.presentation.models.CoinUI
 import com.aml_sakr.cryptotracker.ui.theme.CryptoTrackerTheme
 
 @Composable
-fun CoinListScreen(modifier: Modifier = Modifier, coinListState: CoinListState) {
+fun CoinListScreen(
+    modifier: Modifier = Modifier,
+    coinListState: CoinListState
+) {
     if (coinListState.isLoading) {
         Box(
             modifier = modifier.fillMaxSize(),
