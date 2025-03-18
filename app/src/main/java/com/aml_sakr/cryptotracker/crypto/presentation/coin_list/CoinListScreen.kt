@@ -22,9 +22,10 @@ import com.aml_sakr.cryptotracker.ui.theme.CryptoTrackerTheme
 @Composable
 fun CoinListScreen(
     modifier: Modifier = Modifier,
-    coinListState: CoinListState
+    onAction: (CoinListAction) -> Unit,
+    state: CoinListState
 ) {
-    if (coinListState.isLoading) {
+    if (state.isLoading) {
         Box(
             modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -36,10 +37,12 @@ fun CoinListScreen(
             modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(coinListState.coinList) { coinUI ->
+            items(state.coinList) { coinUI ->
                 CoinListItem(
                     coinUI = coinUI,
-                    onClick = { },
+                    onClick = {
+                        onAction(CoinListAction.OnCoinClick(coinUI))
+                    },
                     modifier = Modifier.fillParentMaxWidth()
                 )
                 HorizontalDivider()
@@ -55,10 +58,11 @@ fun CoinListScreen(
 private fun CoinListScreenPreview() {
     CryptoTrackerTheme {
         CoinListScreen(
-            coinListState = CoinListState(
+            state = CoinListState(
                 coinList = (1..100).map { previewCoin.copy(id = it.toString()) } as ArrayList<CoinUI>
             ),
-            modifier = Modifier.background(MaterialTheme.colorScheme.background))
+            modifier = Modifier.background(MaterialTheme.colorScheme.background),
+            onAction = {})
     }
 
 }
