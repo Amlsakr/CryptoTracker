@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.aml_sakr.cryptotracker.core.presentation.util.ObserveAsEvents
 import com.aml_sakr.cryptotracker.core.presentation.util.toString
+import com.aml_sakr.cryptotracker.crypto.presentation.coin_detail.CoinDetailScreen
 import com.aml_sakr.cryptotracker.crypto.presentation.coin_list.CoinListEvent
 import com.aml_sakr.cryptotracker.crypto.presentation.coin_list.CoinListScreen
 import com.aml_sakr.cryptotracker.crypto.presentation.coin_list.CoinListViewModel
@@ -34,18 +35,27 @@ class MainActivity : ComponentActivity() {
                         when (event) {
                             is CoinListEvent.Error -> {
                                 Toast.makeText(
-                                    context,
-                                    event.error.toString(context),
-                                    Toast.LENGTH_LONG
+                                    context, event.error.toString(context), Toast.LENGTH_LONG
                                 ).show()
                             }
                         }
-
                     }
-                    CoinListScreen(
-                        coinListState = state,
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    when {
+                        state.selectedCoin != null -> {
+                            CoinDetailScreen(
+                                state = state, modifier = Modifier.padding(innerPadding)
+                            )
+                        }
+
+                        else -> {
+                            CoinListScreen(
+                                state = state,
+                                modifier = Modifier.padding(innerPadding),
+                                onAction = viewModel::onAction
+                            )
+                        }
+                    }
+
                 }
             }
         }
